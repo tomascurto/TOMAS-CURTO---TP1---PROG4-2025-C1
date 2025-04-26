@@ -2,26 +2,17 @@
     <div class="auth-container">
       <h2>Registro</h2>
   
-      <form (submit)="onRegister()">
-        <label for="name">Nombre</label>
-        <input id="name" type="text" placeholder="Nombre" [(ngModel)]="nombre" name="name" required />
-        
-        <label for="lastName">Apellido</label>
-        <input id="lastName" type="text" placeholder="Apellido" [(ngModel)]="apellido" name="lastName" required />
-        
-        <label for="email">Correo electrónico</label>
-        <input id="email" type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required />
-        
-        <label for="password">Contraseña</label>
-        <input id="password" type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required />
-        
-        <label for="age">Edad</label>
-        <input id="age" type="number" placeholder="Edad" [(ngModel)]="edad" name="age" required />
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input formControlName="name" type="text" placeholder="Nombre" />
+        <input formControlName="lastName" type="text" placeholder="Apellido" />
+        <input formControlName="email" type="email" placeholder="Correo electrónico" />
+        <input formControlName="password" type="password" placeholder="Contraseña" />
+        <input formControlName="age" type="number" placeholder="Edad" />
   
         <button type="submit">Registrarse</button>
-  
-        <p *ngIf="registerError" class="error">{{ registerError }}</p>
       </form>
+  
+      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
     </div>
   </div>
   

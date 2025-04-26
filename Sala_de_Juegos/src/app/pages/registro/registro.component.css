@@ -25,13 +25,6 @@
     gap: 1rem;
   }
   
-  /* Etiquetas */
-  .auth-container label {
-    font-weight: bold;
-    color: #333; /* Un color más oscuro para las etiquetas */
-    margin-bottom: 0.5rem;
-  }
-  
   /* Títulos */
   .auth-container h2 {
     text-align: center;
@@ -66,23 +59,16 @@
     background-color: #125a9c;
   }
   
-  /* Estilo para el login rápido */
-  .quick-login {
-    text-align: center;
-  }
-  
-  .quick-login button {
-    margin: 0.25rem;
-    background-color: #757575;
-  }
-  
-  .quick-login button:hover {
-    background-color: #555;
-  }
-  
-  /* Mensajes de error */
+  /* Estilo para el mensaje de error */
   .error {
     color: red;
     text-align: center;
+  }
+  
+  /* Ajustes responsivos para asegurar que no se desborde el contenido */
+  @media (max-width: 480px) {
+    .auth-container {
+      padding: 1rem;
+    }
   }
   
