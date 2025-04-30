@@ -4,15 +4,14 @@
     margin-top: 2rem;
   }
   
-  /* Wrapper para centrar todo el contenido en la pantalla */
+ 
   .card-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* ocupa toda la altura de la ventana */
+    height: 100vh; 
   }
   
-  /* Contenedor del formulario */
   .auth-container {
     width: 100%;
     max-width: 400px;
@@ -25,32 +24,28 @@
     gap: 1rem;
   }
   
-  /* Etiquetas */
   .auth-container label {
     font-weight: bold;
-    color: #333; /* Un color más oscuro para las etiquetas */
+    color: #333; 
     margin-bottom: 0.5rem;
   }
   
-  /* Títulos */
   .auth-container h2 {
     text-align: center;
-    color: #1976d2; /* Un color bonito y claro */
+    color: #1976d2; 
     margin-bottom: 1rem;
   }
   
-  /* Estilo de los inputs */
   .auth-container input {
     padding: 0.75rem;
     font-size: 1rem;
     border: 1px solid #aaa;
     border-radius: 6px;
-    margin-bottom: 1rem; /* Separación entre inputs */
-    width: 100%; /* Los inputs ocupan todo el ancho disponible */
-    box-sizing: border-box; /* Asegura que el padding no haga que los inputs se desborden */
+    margin-bottom: 1rem; 
+    width: 100%; 
+    box-sizing: border-box;
   }
-  
-  /* Botón de enviar */
+
   .auth-container button {
     padding: 0.75rem;
     background-color: #1976d2;
@@ -59,14 +54,13 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    width: 100%; /* Botón ocupa todo el ancho */
+    width: 100%; 
   }
   
   .auth-container button:hover {
     background-color: #125a9c;
   }
   
-  /* Estilo para el login rápido */
   .quick-login {
     text-align: center;
   }
@@ -80,7 +74,6 @@
     background-color: #555;
   }
   
-  /* Mensajes de error */
   .error {
     color: red;
     text-align: center;
