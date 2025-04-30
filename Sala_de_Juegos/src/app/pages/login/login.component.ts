@@ -1,28 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AuthService } from '../../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent {
-  email = '';
-  password = '';
-  loginError = '';
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  onLogin() {
-    // Lógica de login con Firebase acá
-    console.log('Login con', this.email, this.password);
-  }
+  errorMessage: string | null = null;
 
-  quickLogin(email: string) {
-    const fakePassword = '123456'; // Cambiar según tus usuarios de prueba
-    this.email = email;
-    this.password = fakePassword;
-    this.onLogin();
+  form: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
+
+  onSubmit(): void {
+    if (!this.form.valid) {
+      this.errorMessage = 'Usuario o contraseña incorrectos';
+      return;
+    }
+
+    const rawForm = this.form.getRawValue();
+
+    this.authService.login(
+      rawForm.email!,
+      rawForm.password!
+    ).subscribe({
+      next: () => this.router.navigateByUrl('/'),
+      error: (err) => this.errorMessage = err.code
+    });
   }
 }

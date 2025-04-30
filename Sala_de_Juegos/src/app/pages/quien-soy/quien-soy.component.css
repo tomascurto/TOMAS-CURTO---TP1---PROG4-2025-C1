@@ -4,15 +4,13 @@
   margin-top: 2rem;
 }
 
-/* Wrapper para centrar todo el contenido en la pantalla */
 .card-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* toma toda la altura de la ventana */
+  height: 100vh; 
 }
 
-/* Contenedor del formulario */
 .auth-container {
   width: 100%;
   max-width: 400px;

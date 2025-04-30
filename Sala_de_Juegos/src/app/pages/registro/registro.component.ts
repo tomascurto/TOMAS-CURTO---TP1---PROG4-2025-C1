@@ -19,7 +19,7 @@ export class RegistroComponent {
   errorMessage: string | null = null;
 
   form: FormGroup = this.fb.group({
-    name: ['', Validators.required],       // se usará como displayName
+    name: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -36,7 +36,7 @@ export class RegistroComponent {
 
     this.authService.register(
       rawForm.email!,
-      rawForm.name!, // 👈 nombre que va como displayName
+      rawForm.name!, 
       rawForm.password!,
       {
         lastName: rawForm.lastName!,
