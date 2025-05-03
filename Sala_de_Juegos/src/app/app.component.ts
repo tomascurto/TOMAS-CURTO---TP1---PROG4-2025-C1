@@ -4,26 +4,21 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth.service';
 import { UserInterface } from './user.interface';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MenubarModule } from 'primeng/menubar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  template: `<app-navbar></app-navbar><router-outlet></router-outlet>`,
 })
 export class AppComponent {
   title = 'Sala_de_Juegos';
 
   authService = inject(AuthService)
   ngOnInit(): void {
-    this.authService.user$.subscribe(user =>{
-      if (user) {
-        this.authService.currentUserSig.set({
-          email: user.email!,
-        })
-      } else {
-        this.authService.currentUserSig.set(null);
-      }
-    })
+    
   }
 }

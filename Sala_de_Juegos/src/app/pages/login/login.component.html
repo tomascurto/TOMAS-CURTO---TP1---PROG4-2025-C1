@@ -2,7 +2,7 @@
     <div class="auth-container">
       <h2>Iniciar Sesión</h2>
   
-      <form (submit)="onSubmit()">
+      <form [formGroup]="form" (submit)="onSubmit()">
         <label for="email">Correo electrónico</label>
         <input id="email" type="email" placeholder="Correo electrónico" formControlName="email" name="email" required />
         

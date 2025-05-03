@@ -43,7 +43,11 @@ export class RegistroComponent {
         age: rawForm.age!
       }
     ).subscribe({
-      next: () => this.router.navigateByUrl('/'),
+      next: () => 
+      {
+        console.log("llegue hasta aca");
+        this.router.navigateByUrl('/');
+      },
       error: (err) => this.errorMessage = err.code
     });
   }

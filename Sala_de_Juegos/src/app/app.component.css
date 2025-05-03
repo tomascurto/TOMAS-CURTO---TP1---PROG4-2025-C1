@@ -1,0 +1,20 @@
+app-navbar {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 40px;
+    z-index: 1000;
+    padding: 0 20px;
+    background-color: #1976d2;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: block;
+    align-items: center;
+}
+
+  
+body, main {
+margin-top: 70px;
+background-color: #a1d0ff;
+}
+  
