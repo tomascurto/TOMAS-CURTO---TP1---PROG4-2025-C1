@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div class="home-container">
+    <div class="card-grid">
+      <p-card *ngFor="let game of games" [header]="game.name" class="game-card">
+        <div class="game-content">
+          <p class="game-description">{{ game.description }}</p>
+        </div>
+        <ng-template pTemplate="footer">
+          <small class="footer-note">Haz clic para comenzar</small>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  
