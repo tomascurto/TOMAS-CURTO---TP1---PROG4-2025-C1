@@ -12,9 +12,14 @@ import { Button } from 'primeng/button';
 })
 export class HomeComponent {
   games = [
-    { name: 'Juego 1', description: 'descripcion juego 1' },
-    { name: 'Juego 2', description: 'descripcion juego 2' },
-    { name: 'Juego 3', description: 'descripcion juego 3' },
-    { name: 'Juego 4', description: 'descripcion juego 4' }
+    { 
+      name: 'Ahorcado', 
+      description: 'Descubre la palabra escondida arriesgandote letra a letra', 
+      route: '/juegos/ahorcado', 
+      image: 'assets/ahorcado/a6.png' 
+    },
+    // { name: 'Juego 2', description: 'descripcion juego 2' },
+    // { name: 'Juego 3', description: 'descripcion juego 3' },
+    // { name: 'Juego 4', description: 'descripcion juego 4' }
   ];
 }

@@ -26,7 +26,6 @@ export class AuthService {
 
         await updateProfile(response.user, { displayName: `${name} ${extraData.lastName}` });
         const userRef = doc(this.firestore, `users/${response.user.uid}`);
-        console.log("parada 2");
         await setDoc(userRef, {
           uid: response.user.uid,
           email: response.user.email,
@@ -34,7 +33,6 @@ export class AuthService {
           lastName: extraData.lastName,
           age: extraData.age
         });
-        console.log("parada 3");
         this.currentUserSubject.next({
           email: response.user.email!,
           displayName: `${name} ${extraData.lastName}`,

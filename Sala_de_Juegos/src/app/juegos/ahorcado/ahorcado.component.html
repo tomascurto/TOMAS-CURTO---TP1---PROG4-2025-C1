@@ -1,0 +1,30 @@
+<div class="fondo">
+    <img src="assets/ahorcado/FONDO.jpeg" class="fondo-img" alt="fondo" />
+  
+    <div class="juego-contenido">
+      <img [src]="'assets/ahorcado/a' + errores + '.png'" class="estado-img" alt="ahorcado" />
+  
+      <div class="palabra">
+        <span *ngFor="let letra of palabraOculta.split('')">
+          {{ letrasCorrectas.includes(letra) ? letra : '_' }}
+        </span>
+      </div>
+  
+      <div class="teclado">
+        <div *ngFor="let fila of abecedario" class="fila">
+          <button 
+            *ngFor="let letra of fila"
+            (click)="seleccionarLetra(letra)"
+            [disabled]="letrasSeleccionadas.includes(letra)">
+            {{ letra }}
+          </button>
+        </div>
+      </div>
+  
+      <div *ngIf="juegoTerminado" class="resultado">
+        <p *ngIf="gano">¡Ganaste! 🎉</p>
+        <p *ngIf="!gano">Perdiste. La palabra era: {{ palabraOculta }}</p>
+      </div>
+    </div>
+</div>
+  

@@ -45,7 +45,6 @@ export class RegistroComponent {
     ).subscribe({
       next: () => 
       {
-        console.log("llegue hasta aca");
         this.router.navigateByUrl('/');
       },
       error: (err) => this.errorMessage = err.code

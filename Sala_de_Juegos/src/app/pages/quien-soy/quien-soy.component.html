@@ -12,6 +12,7 @@
     </ng-template>
 
     <div class="card-content">
+      <p>{{ githubUser.bio || 'Sin biografía' }}</p>
       <p><strong>Seguidores:</strong> {{ githubUser.followers }}</p>
       <p><strong>Siguiendo:</strong> {{ githubUser.following }}</p>
       <p><strong>Repos públicos:</strong> {{ githubUser.public_repos }}</p>

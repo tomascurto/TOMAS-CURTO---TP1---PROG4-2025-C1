@@ -1,11 +1,14 @@
 <div class="home-container">
     <div class="card-grid">
-      <p-card *ngFor="let game of games" [header]="game.name" class="game-card">
+      <p-card *ngFor="let game of games" [header]="game.name" [routerLink]="game.route" class="game-card">
         <div class="game-content">
+          <img [src]="game.image" alt="{{ game.name }}" class="game-image" />
           <p class="game-description">{{ game.description }}</p>
         </div>
         <ng-template pTemplate="footer">
-          <small class="footer-note">Haz clic para comenzar</small>
+          <small class="footer-note">
+            <a  class="start-link">Haz clic para comenzar</a>
+          </small>
         </ng-template>
       </p-card>
     </div>
