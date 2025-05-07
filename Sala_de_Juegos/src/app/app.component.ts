@@ -1,11 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth.service';
-import { UserInterface } from './user.interface';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MenubarModule } from 'primeng/menubar';
+import { SessionTimeoutService } from '../session-timeout.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +15,10 @@ export class AppComponent {
   title = 'Sala_de_Juegos';
 
   authService = inject(AuthService)
+
+  sessionTimeoutService = inject(SessionTimeoutService);
+
+  constructor() {}
   ngOnInit(): void {
-    
   }
 }

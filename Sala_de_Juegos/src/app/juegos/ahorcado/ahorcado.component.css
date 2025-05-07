@@ -29,22 +29,28 @@
   }
   
   .palabra {
-    font-size: 2rem;
     letter-spacing: 10px;
     margin: 1rem 0;
+    font-size: 50px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
   }
   
   .teclado button {
     margin: 10px;
     width: 60px;        
-    height: 60px;       
-    font-size: 1.5rem;
+    height: 60px;    
+    font-size: 50px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent; 
+    font-family: 'Comic Sans MS', cursive, sans-serif;
   }
   
   .resultado {
     margin-top: 2rem;
-    font-size: 1.5rem;
     font-weight: bold;
+    font-size: 50px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
   }
   
   .fila {
@@ -52,3 +58,17 @@
     justify-content: center;
     margin-bottom: 10px;
   }
+
+  .boton-comenzar-img {
+    width: 1000px; 
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .img-volver {
+    margin-top: 20px;
+    width: 300px; 
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
