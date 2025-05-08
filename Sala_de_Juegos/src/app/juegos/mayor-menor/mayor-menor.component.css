@@ -1,0 +1,131 @@
+.card-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  .centrado-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    width: 200px;
+    height: auto;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  }
+  
+  .carta-entrada {
+    animation: entrar 0.5s ease forwards;
+  }
+  
+  .carta-salida {
+    animation: salir 0.5s ease forwards;
+  }
+  
+  @keyframes entrar {
+    from {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes salir {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+  }
+
+  .card-row .card.previous {
+    position: absolute;
+    left: calc(50% - 250px);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+  }
+  
+  .btn-comenzar {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-comenzar:hover {
+    background-color: #125a9c;
+  }
+  
+  .controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .controls button:hover {
+    background-color: #388e3c;
+  }
+  
+  .reiniciar-container {
+    margin-top: 30px;
+  }
+  
+  .cartas-final {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  
+  .card-row .card.previous.ng-leave {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+
+  app-cronometro {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  

@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SessionTimeoutService } from '../session-timeout.service';
+import { UserInterface } from './user.interface';
+
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,17 @@ export class AppComponent {
 
   sessionTimeoutService = inject(SessionTimeoutService);
 
+  router = inject(Router);
+
+
   constructor() {}
   ngOnInit(): void {
+    this.authService.currentUser$.subscribe((user: UserInterface | null) => {
+      if (user) {
+        this.router.navigate(['/home']);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

@@ -1,0 +1,41 @@
+<div class="container">
+
+    <h2>Juego: Mayor, Igual o Menor</h2>
+  
+    <button *ngIf="!gameStarted && !juegoTerminado" class="btn-comenzar" (click)="startGame()">Comenzar</button>
+  
+    <app-cronometro 
+      *ngIf="gameStarted && !juegoTerminado"
+      (tiempoFinalizado)="guardarTiempo($event)"
+      #cronometro>
+    </app-cronometro>
+  
+    <div *ngIf="gameStarted  && !juegoTerminado" class="card-row">
+      <img class="card" *ngIf="previousCard" [src]="previousCard.imagen" [ngClass]="cardAnimationState.anterior" alt="Anterior">
+  
+      <div class="centrado-cards">
+        <img class="card" *ngIf="currentCard" [src]="currentCard.imagen" [ngClass]="cardAnimationState.actual" alt="Actual">
+        <img class="card" *ngIf="nextCard" [src]="showNextCard ? nextCard.imagen : 'assets/cartas/Back.png'" [ngClass]="cardAnimationState.siguiente" alt="Próxima">
+      </div>
+    </div>
+
+    <div class="cartas-final" *ngIf="juegoTerminado">
+        <img class="card" [src]="currentCard?.imagen" alt="Carta actual" />
+        <img class="card" [src]="nextCard?.imagen" alt="Carta fallida" />
+    </div>
+      
+  
+    <div class="controls" *ngIf="gameStarted && !juegoTerminado">
+      <button (click)="guess('mayor')">Mayor</button>
+      <button (click)="guess('igual')">Igual</button>
+      <button (click)="guess('menor')">Menor</button>
+    </div>
+  
+    <div class="reiniciar-container" *ngIf="juegoTerminado">
+        <p><strong>¡Juego terminado!</strong></p>
+        <p><strong>Aciertos:</strong> {{ aciertos }}</p>
+        <p><strong>Tiempo:</strong> {{ tiempoFinal }} segundos</p>
+        <button class="btn-comenzar" (click)="startGame()">Reiniciar</button>
+      </div>
+  
+  </div>

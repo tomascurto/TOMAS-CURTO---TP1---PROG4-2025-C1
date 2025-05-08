@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import { FirebaseError } from 'firebase/app';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,15 @@ export class LoginComponent {
     ).subscribe({
       next: () => this.router.navigateByUrl('/'),
       error: (err) => this.errorMessage = err.code
+    });
+  }
+
+  loginRapido(correo: string, contrasena: string): void {
+    this.authService.login(correo, contrasena).subscribe({
+      next: () => this.router.navigate(['/home']),
+      error: (error: FirebaseError) => {
+        console.error('Firebase error:', error.code, error.message);
+      }
     });
   }
 }

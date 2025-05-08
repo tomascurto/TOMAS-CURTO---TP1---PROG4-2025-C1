@@ -18,7 +18,12 @@ export class HomeComponent {
       route: '/juegos/ahorcado', 
       image: 'assets/ahorcado/a6.png' 
     },
-    // { name: 'Juego 2', description: 'descripcion juego 2' },
+    { 
+      name: 'Mayor o Menor', 
+      description: 'Adivina si la próxima carta es mayor, menor o igual a la anterior', 
+      route: '/juegos/mayor-menor', 
+      image: 'assets/cartas/MoM.png' 
+    },
     // { name: 'Juego 3', description: 'descripcion juego 3' },
     // { name: 'Juego 4', description: 'descripcion juego 4' }
   ];

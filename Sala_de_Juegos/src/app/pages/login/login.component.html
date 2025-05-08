@@ -9,13 +9,13 @@
         <label for="password">Contraseña</label>
         <input id="password" type="password" placeholder="Contraseña" formControlName="password" name="password" required />
   
-        <button type="submit">Ingresar</button>
-  
+        <button class="login-btn" type="submit">Ingresar</button>
+        
+        <h2>Login rápido</h2>
         <div class="quick-login">
-          <p>Login rápido:</p>
-          <!-- <button type = button (click)="quickLogin('user1@example.com')">User 1</button>
-          <button type = button (click)="quickLogin('user2@example.com')">User 2</button>
-          <button type = button (click)="quickLogin('user3@example.com')">User 3</button> -->
+          <button type="button" (click)="loginRapido('test@example.com', 'test123')">TEST</button>
+          <button type="button" (click)="loginRapido('admin@example.com', 'adm123')">ADM</button>
+          <button type="button" (click)="loginRapido('desarr@example.com', 'des123')">DEV</button>
         </div>
   
         <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
