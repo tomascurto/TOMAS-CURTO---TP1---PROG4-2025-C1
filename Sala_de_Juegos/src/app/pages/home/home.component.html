@@ -1,7 +1,8 @@
 <div class="home-container">
     <div class="card-grid">
-      <p-card *ngFor="let game of games" [header]="game.name" [routerLink]="game.route" class="game-card">
+      <p-card *ngFor="let game of games" [routerLink]="game.route" class="game-card">
         <div class="game-content">
+          <h2>{{ game.name }}</h2>
           <img [src]="game.image" alt="{{ game.name }}" class="game-image" />
           <p class="game-description">{{ game.description }}</p>
         </div>
