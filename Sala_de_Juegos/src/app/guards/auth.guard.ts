@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
         const ruta = state.url;
 
         if (user) {
-          // Usuario logueado
           if (ruta === '/login' || ruta === '/registro') {
             this.router.navigate(['/']);
             observer.next(false);
@@ -23,7 +22,6 @@ export class AuthGuard implements CanActivate {
             observer.next(true);
           }
         } else {
-          // Usuario no logueado
           if (ruta.startsWith('/juegos')) {
             this.router.navigate(['/']);
             observer.next(false);

@@ -1,0 +1,28 @@
+<div *ngIf="visible" class="chat-container">
+    <div class="chat-header">
+      <h3>Chat</h3>
+    </div>
+ 
+    <div class="chat-messages">
+      <div *ngFor="let message of messages$ | async" class="chat-message">
+        <div class="message-info">
+          <span class="message-user">{{ message.displayName }}</span>
+          <span class="message-time">{{ message.timestamp?.toDate() | date: 'HH:mm:ss-dd/MM/yyyy' }}</span>
+        </div>
+        <div class="message-content">
+          <p>{{ message.message }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="chat-input">
+      <input 
+        [(ngModel)]="newMessage" 
+        type="text" 
+        placeholder="Escribe un mensaje..." 
+        (keyup.enter)="sendMessage()">
+      <button (click)="sendMessage()" [disabled]="!newMessage.trim()">Enviar</button>
+    </div>
+  </div>
+  
+  

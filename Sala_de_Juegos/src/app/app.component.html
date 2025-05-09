@@ -1,3 +1,10 @@
 
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
+<button *ngIf="user" [ngClass]="{
+    'animate-left': buttonState === 'left',
+    'animate-right': buttonState === 'right'
+  }" class="chat-toggle" (click)="toggleChat()">
+    {{ isChatVisible ? 'Cerrar Chat' : 'Abrir Chat' }}
+  </button>
+  <app-chat [visible]="isChatOpen"></app-chat>
