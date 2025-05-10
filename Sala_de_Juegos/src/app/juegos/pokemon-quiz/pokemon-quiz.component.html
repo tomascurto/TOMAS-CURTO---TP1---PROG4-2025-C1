@@ -1,0 +1,25 @@
+<div class="quiz-container" *ngIf="pregunta">
+  <h2>{{ pregunta.pregunta }}</h2>
+
+  <img [src]="pregunta.imagenUrl" alt="Imagen Pokémon" />
+
+  <div class="opciones">
+    <button 
+      *ngFor="let opcion of pregunta.opciones" 
+      [disabled]="respuestaSeleccionada" 
+      (click)="verificarRespuesta(opcion.texto)">
+      {{ opcion.texto }}
+    </button>
+  </div>
+
+  <div class="resultado" *ngIf="respuestaSeleccionada">
+    {{ resultado }}
+  </div>
+
+  <button 
+    class="siguiente-btn" 
+    *ngIf="respuestaSeleccionada" 
+    (click)="generarNuevaPregunta()">
+    Siguiente pregunta
+  </button>
+</div>

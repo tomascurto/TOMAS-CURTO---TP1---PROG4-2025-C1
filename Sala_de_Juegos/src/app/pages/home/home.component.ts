@@ -25,7 +25,12 @@ export class HomeComponent {
       route: '/juegos/mayor-menor', 
       image: 'assets/cartas/MoM.png' 
     },
-    // { name: 'Juego 3', description: 'descripcion juego 3' },
+    { 
+      name: 'Preguntas Pokémon', 
+      description: 'Tienes que ser siempre el mejor, ¡Mejor que nadie más!', 
+      route: '/juegos/pokemon-quiz', 
+      image: 'assets/pokebola.png' 
+    },
     // { name: 'Juego 4', description: 'descripcion juego 4' }
   ];
 }
