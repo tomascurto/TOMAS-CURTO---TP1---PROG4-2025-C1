@@ -35,7 +35,7 @@
                 </div>
 
                 <!-- Cronómetro solo para la mano actual -->
-                <app-cronometro *ngIf="i === manoActual && !juegoFinalizado" #cronometro></app-cronometro>
+                <app-cronometro *ngIf="i === manoActual && !juegoFinalizado && !mano.juegoTerminado" #cronometro></app-cronometro>
 
                 <!-- Resultado -->
                 <div *ngIf="mano.juegoTerminado" class="resultado">

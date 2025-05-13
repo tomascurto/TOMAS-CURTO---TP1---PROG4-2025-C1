@@ -155,6 +155,7 @@ export class PokeralaComponent implements OnInit {
     const totalPuntaje = this.manos.reduce((sum, m) => sum + m.puntaje, 0);
     const totalTiempo = this.manos.reduce((sum, m) => sum + m.tiempo, 0);
     console.log('Puntaje total:', totalPuntaje, 'Tiempo total:', totalTiempo);
+    this.guardarPartida();
   }
 
   toggleCartaSeleccionada(carta: Carta, manoIndex: number): void {

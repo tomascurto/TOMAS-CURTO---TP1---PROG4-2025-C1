@@ -37,10 +37,9 @@ export class PartidasPokerService {
       uid,
       displayName
     });
-
     console.log('Partida guardada con ID:', docRef.id);
   } catch (e) {
-    console.error('Error añadiendo el documento extendido: ', e);
+    console.error('Error añadiendo el documento', e);
   }
 }
 }
