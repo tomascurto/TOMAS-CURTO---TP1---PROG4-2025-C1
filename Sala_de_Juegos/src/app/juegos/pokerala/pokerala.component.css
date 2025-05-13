@@ -36,6 +36,15 @@
   margin-top: 20px;
 }
 
+.resultado-final {
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  text-align: center;
+}
+
 .mano-container {
   display: flex;
   flex-direction: row;

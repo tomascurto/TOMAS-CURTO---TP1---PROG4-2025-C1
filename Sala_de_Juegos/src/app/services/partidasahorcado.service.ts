@@ -11,9 +11,10 @@ export class PartidasAhorcadoService {
   async guardarPartida(partida: any) {
     const user = getAuth().currentUser;
     if (!user) return;
-
+    const displayName = user?.displayName ?? 'Anónimo';
     const partidasRef = collection(this.firestore, 'partidasAhorcado');
     const datos = {
+      displayName,
       uid: user.uid,
       fecha: new Date(),
       ...partida

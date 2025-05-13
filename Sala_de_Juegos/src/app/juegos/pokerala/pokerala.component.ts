@@ -25,6 +25,9 @@ export class PokeralaComponent implements OnInit {
     cambiosDisponibles: 2,
     juego: ""
   }));
+  mejorPuntaje: number = 0;
+  mejorManoCartas: Carta[] = [];
+  mejorJuego: string = "";
 
   juegoIniciado: boolean = false;
   juegoFinalizado: boolean = false;
@@ -59,6 +62,27 @@ export class PokeralaComponent implements OnInit {
     
   }
 
+  reiniciarJuego(): void {
+  this.juegoIniciado = false;
+  this.juegoFinalizado = false;
+  this.puntajeTotal = 0;
+  this.tiempoTotal = 0;
+  this.manoActual = 0;
+
+  // Resetear cada mano
+  this.manos = Array(5).fill(null).map(() => ({
+    baraja: [],
+    manoJugador: [],
+    cartasSeleccionadas: [],
+    cartasDescartadas: [],
+    juegoTerminado: false,
+    puntaje: 0,
+    tiempo: 0,
+    cambiosDisponibles: 2,
+    juego: ""
+  }));
+}
+
   cambiarCartas(manoIndex: number): void {
     const mano = this.manos[manoIndex];
     if (mano.cambiosDisponibles <= 0 || mano.juegoTerminado) return;
@@ -86,23 +110,33 @@ export class PokeralaComponent implements OnInit {
   }
 
   finalizarMano(manoIndex: number): void {
-    const mano = this.manos[manoIndex];
-    mano.puntaje = calcularPuntaje(mano.manoJugador);
-    mano.juegoTerminado = true;
-    mano.juego = this.obtenerDescripcionJugada(mano.puntaje);
-    // Sumar puntaje y tiempo
-    this.puntajeTotal += mano.puntaje;
-    this.tiempoTotal += mano.tiempo;
+  const mano = this.manos[manoIndex];
 
-    // Verificar si hemos terminado todas las manos
-    if (this.manoActual < 4) {
-      this.manoActual++; // pasar a la siguiente mano
-      } else {
-        this.juegoFinalizado = true;
-        this.calcularResultadoFinal(); // función que suma tiempos y puntajes
-      }
+  if (mano.juegoTerminado) return; // Evita duplicación
 
+  // Asegura que el tiempo esté actualizado
+  if (mano.tiempo === 0 && this.cronometroComponent) {
+    mano.tiempo = this.cronometroComponent.segundos;
   }
+
+  mano.puntaje = calcularPuntaje(mano.manoJugador);
+  mano.juegoTerminado = true;
+  mano.juego = this.obtenerDescripcionJugada(mano.puntaje);
+
+  this.puntajeTotal += mano.puntaje;
+  this.tiempoTotal += mano.tiempo;
+  if (mano.puntaje > this.mejorPuntaje) {
+    this.mejorPuntaje = mano.puntaje;
+    this.mejorManoCartas = [...mano.manoJugador]; 
+    this.mejorJuego = mano.juego;
+}
+  if (this.manoActual < 4) {
+    this.manoActual++;
+  } else {
+    this.juegoFinalizado = true;
+    this.calcularResultadoFinal();
+  }
+}
 
   obtenerDescripcionJugada(puntaje: number): string {
   if (puntaje === 2000000) return 'Escalera Real';
@@ -143,11 +177,16 @@ export class PokeralaComponent implements OnInit {
   }
 
   guardarPartida(): void {
-  this.partidasService.guardarPartida(this.puntajeTotal, this.tiempoTotal).then(() => {
-    console.log('Partida guardada exitosamente.');
-  }).catch((error) => {
-    console.error('Error al guardar la partida: ', error);
-  });
-}
+    this.partidasService.guardarPartidaExtendida(
+      this.puntajeTotal,
+      this.tiempoTotal,
+      this.mejorJuego,
+      this.mejorManoCartas
+    ).then(() => {
+      console.log('Partida guardada con mejor mano.');
+    }).catch((error) => {
+      console.error('Error al guardar la partida: ', error);
+    });
+  }
 
 }

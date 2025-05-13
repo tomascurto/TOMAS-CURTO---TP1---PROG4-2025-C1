@@ -11,9 +11,10 @@ export class PartidasQuizService {
 
   async guardarPartida(puntuacion: number, tiempo: number): Promise<void> {
     const user = this.auth.currentUser;
-    if (!user) return;
-
+    if (!user) return;  
+    const displayName = user?.displayName ?? 'Anónimo';
     const partida = {
+      displayName,
       uid: user.uid,
       puntuacion,
       tiempo,

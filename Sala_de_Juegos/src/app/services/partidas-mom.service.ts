@@ -12,9 +12,10 @@ export class PartidasMomService {
   async guardarPartida(aciertos: number, tiempo: number): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) return;
-
+    const displayName = user?.displayName ?? 'Anónimo';
     const partida = {
       uid: user.uid,
+      displayName,
       aciertos,
       tiempo,
       fecha: new Date(),

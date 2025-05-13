@@ -35,7 +35,7 @@
                 </div>
 
                 <!-- Cronómetro solo para la mano actual -->
-                <app-cronometro *ngIf="i === manoActual" #cronometro></app-cronometro>
+                <app-cronometro *ngIf="i === manoActual && !juegoFinalizado" #cronometro></app-cronometro>
 
                 <!-- Resultado -->
                 <div *ngIf="mano.juegoTerminado" class="resultado">
@@ -52,9 +52,16 @@
                     </button>
                 </div>
             </ng-container>
+        </div>  
+        <div *ngIf="juegoFinalizado" class="resultado-final">
+            <h2>¡Juego Finalizado!</h2>
+            <p><strong>Puntaje total:</strong> {{ puntajeTotal }}</p>
+            <p><strong>Tiempo total:</strong> {{ tiempoTotal }} segundos</p>
+            <button class="btn btn-success" (click)="reiniciarJuego()">Reiniciar partida</button>
         </div>
 
     </div>
+
 </div>
 
 

@@ -10,21 +10,37 @@ export class PartidasPokerService {
   firestore = inject(Firestore);
   auth = inject(Auth);
 
-  async guardarPartida(puntaje: number, tiempo: number): Promise<void> {
-    try {
+  async guardarPartidaExtendida(
+  puntaje: number,
+  tiempo: number,
+  mejorJuego: string,
+  mejorManoCartas: any[]
+): Promise<void> {
+  try {
+    const user = this.auth.currentUser;
+    const uid = user ? user.uid : null;
+    const displayName = user?.displayName ?? 'Anónimo';
 
-      const user = this.auth.currentUser;
-      const uid = user ? user.uid : null;
+    const mejorManoSimplificada = mejorManoCartas.map(c => ({
+      nombre: c.nombre,
+      palo: c.palo,
+      valor: c.valor,
+      imagen: c.imagen
+    }));
 
-      const docRef = await addDoc(collection(this.firestore, 'partidas_poker'), {
-        puntaje,
-        tiempo,
-        fecha: new Date(),
-        uid
-      });
-      console.log('Partida guardada con ID:', docRef.id);
-    } catch (e) {
-      console.error('Error añadiendo el documento: ', e);
-    }
+    const docRef = await addDoc(collection(this.firestore, 'partidas_poker'), {
+      puntaje,
+      tiempo,
+      mejorJuego,
+      mejorMano: mejorManoSimplificada,
+      fecha: new Date(),
+      uid,
+      displayName
+    });
+
+    console.log('Partida guardada con ID:', docRef.id);
+  } catch (e) {
+    console.error('Error añadiendo el documento extendido: ', e);
   }
+}
 }
