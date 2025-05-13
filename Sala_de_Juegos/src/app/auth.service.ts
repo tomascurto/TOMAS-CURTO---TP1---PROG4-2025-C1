@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user, setPersistence, browserLocalPersistence } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { UserInterface } from './user.interface';
 import { Router } from '@angular/router';
+import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,16 @@
-<div class="quiz-container" *ngIf="pregunta">
-  <h2>{{ pregunta.pregunta }}</h2>
 
+<div *ngIf="!juegoIniciado">
+  <button class="boton-comenzar" (click)="comenzarJuego()">Comenzar</button>
+</div>
+<div class="cronometro-wrapper" *ngIf="juegoEnCurso || juegoFinalizado">
+  <app-cronometro
+    (tiempoFinalizado)="guardarPartida($event)">
+  </app-cronometro>
+</div>
+<div class="quiz-container" *ngIf="juegoEnCurso && pregunta">
+  
+
+  <h2>{{ pregunta.pregunta }}</h2>
   <img [src]="pregunta.imagenUrl" alt="Imagen Pokémon" />
 
   <div class="opciones">
@@ -18,8 +28,30 @@
 
   <button 
     class="siguiente-btn" 
-    *ngIf="respuestaSeleccionada" 
+    *ngIf="respuestaSeleccionada && resultado === '¡Correcto!'" 
     (click)="generarNuevaPregunta()">
     Siguiente pregunta
   </button>
 </div>
+
+<div class="quiz-container" *ngIf="juegoFinalizado">
+  <h2>{{ pregunta.pregunta }}</h2>
+  <img [src]="pregunta.imagenUrl" alt="Imagen Pokémon" />
+
+  <div class="opciones">
+    <button 
+      *ngFor="let opcion of pregunta.opciones" 
+      [disabled]="respuestaSeleccionada" 
+      (click)="verificarRespuesta(opcion.texto)">
+      {{ opcion.texto }}
+    </button>
+  </div>
+
+  <div class="resultado" *ngIf="respuestaSeleccionada">
+    {{ resultado }}
+  </div>
+  <h2>Juego finalizado</h2>
+  <p>Puntaje final: {{ puntuacion }}</p>
+  <button class="boton-comenzar" (click)="reiniciarJuego()">Volver a jugar</button>
+</div>
+

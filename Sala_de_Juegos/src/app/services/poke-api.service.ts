@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +27,13 @@ export class PokeApiService {
     return this.http.get<any>(`${this.baseUrl}/evolution-chain/${id}`);
   }
 
-  getPokemonSpecies(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/pokemon-species/${id}`);
-  }
+  getPokemonSpecies(idOrUrl: string | number): Observable<any> {
+    const url = typeof idOrUrl === 'string' && idOrUrl.startsWith('http')
+        ? idOrUrl
+        : `${this.baseUrl}/pokemon-species/${idOrUrl}/`;
+
+    return this.http.get(url);
+}
 
   getGeneration(idOrUrl: string | number): Observable<any> {
     const url = typeof idOrUrl === 'string' ? idOrUrl : `${this.baseUrl}/generation/${idOrUrl}`;
@@ -50,9 +57,14 @@ export class PokeApiService {
   }
 
   getEvolutionChains(): Observable<any[]> {
-  return this.http.get<any>(`${this.baseUrl}/evolution-chain?limit=549`).pipe(
-    map(response => response.results)
-  );
-}
+    return this.http.get<any>(`${this.baseUrl}/evolution-chain?limit=549`).pipe(
+      map(response => response.results.map((r: any) => r.url)),
+      switchMap((urls: string[]) => {
+        const peticiones = urls.map(url => this.http.get<any>(url)); 
+        return forkJoin(peticiones); 
+      })
+    );
+  }
+
 
 }

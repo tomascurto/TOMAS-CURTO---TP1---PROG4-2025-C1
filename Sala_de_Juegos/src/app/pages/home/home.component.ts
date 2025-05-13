@@ -31,6 +31,11 @@ export class HomeComponent {
       route: '/juegos/pokemon-quiz', 
       image: 'assets/pokebola.png' 
     },
-    // { name: 'Juego 4', description: 'descripcion juego 4' }
+    { 
+      name: 'Pokerala', 
+      description: 'Consigue el puntaje mas alto posible en 5 manos de poker', 
+      route: '/juegos/pokerala', 
+      image: 'assets/cartas/poker.png' 
+    }
   ];
 }

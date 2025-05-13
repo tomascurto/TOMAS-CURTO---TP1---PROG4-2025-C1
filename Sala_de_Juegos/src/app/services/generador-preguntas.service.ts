@@ -20,16 +20,17 @@ export class GeneradorPreguntasService {
     listaCadenasEvolucion: any[]  
   ): Observable<Pregunta| null> {
     const tipoPregunta = this.obtenerTipoPreguntaAleatorio();
-    
+    console.log('[Generador] Generando pregunta del tipo:', tipoPregunta);
+
     switch (tipoPregunta) {
     case 'evolucion':
       return this.generarPreguntaEvolucion(listaCadenasEvolucion, listaPokemones);
     case 'preevolucion':
       return this.generarPreguntaEvolucionDesde(listaCadenasEvolucion, listaPokemones);
     case 'generacion':
-      return this.generarPreguntaGeneracion(); // No necesita listas externas
+      return this.generarPreguntaGeneracion();
     case 'numeroPokedex':
-      return this.generarPreguntaPokedexNumero(); // No necesita listas externas
+      return this.generarPreguntaPokedexNumero(); 
     case 'pokedex':
       return this.generarPreguntaPokedex(listaPokemones);
     case 'nombre':
@@ -225,105 +226,123 @@ export class GeneradorPreguntasService {
     generarPreguntaEvolucion(listaEvoluciones: any[], listaPokemones: any[]): Observable<Pregunta | null> {
         return of(listaEvoluciones).pipe(
             switchMap((evolutionChains: any[]) => {
-                const validChains = evolutionChains.filter((chain) => chain.chain && chain.chain.evolves_to && chain.chain.evolves_to.length > 0);
-                
-                if (validChains.length === 0) {
-                    return of(null);
-                }
+            const validChains = evolutionChains.filter((chain) =>
+                chain && chain.chain && Array.isArray(chain.chain.evolves_to) && chain.chain.evolves_to.length > 0
+            );
 
-                const randomChain = this.mezclarOpciones(validChains)[0];
+            if (validChains.length === 0) return of(null);
 
-                const pokemonConEvolucion = this.obtenerPokemonConEvolucion(randomChain);
+            const randomChain = this.mezclarOpciones(validChains)[0];
+            const pokemonConEvolucion = this.obtenerPokemonConEvolucion((randomChain as any).chain);
 
-                if (!pokemonConEvolucion) {
-                    return of(null); 
-                }
+            if (!pokemonConEvolucion || !pokemonConEvolucion.evolves_to || pokemonConEvolucion.evolves_to.length === 0) {
+                return of(null);
+            }
 
-                const evolucion = pokemonConEvolucion.evolves_to[0].species.name;
+            const evolucion = pokemonConEvolucion.evolves_to[0].species.name;
 
-                const opcionesIncorrectas = this.obtenerOpcionesIncorrectasEvolucion(
-                    pokemonConEvolucion.species.name, evolucion, listaPokemones
-                );
+            const opcionesIncorrectas = this.obtenerOpcionesIncorrectasEvolucion(
+                pokemonConEvolucion.species.name, evolucion, listaPokemones
+            );
 
-                const opciones = this.mezclarOpciones([evolucion, ...opcionesIncorrectas]);
+            const opciones = this.mezclarOpciones([evolucion, ...opcionesIncorrectas]);
 
-                const pregunta: Pregunta = {
-                    id: `evolucion-${pokemonConEvolucion.species.name}`,
-                    pregunta: `¿Cuál es la evolución de ${pokemonConEvolucion.species.name}?`,
-                    imagenUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonConEvolucion.species.name}.png`,
-                    opciones: opciones.map((texto) => ({
-                        texto,
-                        valor: texto === evolucion ? 'correcto' : 'incorrecto'
-                    })),
-                    respuestaCorrecta: evolucion
-                };
+            const pregunta: Pregunta = {
+                id: `evolucion-${pokemonConEvolucion.species.name}`,
+                pregunta: `¿Cuál es la evolución de ${pokemonConEvolucion.species.name}?`,
+                imagenUrl: `https://img.pokemondb.net/sprites/home/normal/${pokemonConEvolucion.species.name}.png`,
+                opciones: opciones.map((texto) => ({
+                texto,
+                valor: texto === evolucion ? 'correcto' : 'incorrecto'
+                })),
+                respuestaCorrecta: evolucion
+            };
 
-                return of(pregunta);
+            return of(pregunta);
             }),
-            catchError(() => of(null)) 
+            catchError((error) => {
+            console.error('[Error] Generando pregunta de evolución:', error);
+            return of(null);
+            })
         );
-    }
+        }
+
 
     private obtenerPokemonConEvolucion(chain: any): any {
-        if (chain.evolves_to.length > 0) {
+        if (chain && chain.evolves_to && chain.evolves_to.length > 0) {
             return chain;
         }
 
-        for (const evo of chain.evolves_to) {
+        for (const evo of chain.evolves_to || []) {
             const resultado = this.obtenerPokemonConEvolucion(evo);
             if (resultado) return resultado;
         }
-        return null; 
+
+        return null;
     }
 
     private obtenerOpcionesIncorrectasEvolucion(
-        pokemon: string, evolucion: string, listaPokemones: any[]
+        pokemon: string,
+        evolucion: string,
+        listaPokemones: any[]
         ): string[] {
-            const opcionesPosibles = listaPokemones.filter((p: any) => {
-                return p.name !== pokemon && p.name !== evolucion;
-            });
+        const opcionesPosibles = listaPokemones.filter((p: any) => {
+            return p.name !== pokemon && p.name !== evolucion;
+        });
 
         const opcionesIncorrectas = this.mezclarOpciones(opcionesPosibles).slice(0, 3);
+
         return opcionesIncorrectas.map((p: any) => p.name);
     }
 
 
     generarPreguntaEvolucionDesde(evolutionChains: any[], listaPokemones: any[]): Observable<Pregunta | null> {
-        const validChains = evolutionChains.filter((chain) => chain.chain && chain.chain.evolves_to && chain.chain.evolves_to.length > 0);
-
-        if (validChains.length === 0) {
-            return of(null); 
-        }
-
-        const randomChain = this.mezclarOpciones(validChains)[0];
-        const pokemonConEvolucion = this.obtenerPokemonConEvolucion(randomChain);
-
-        if (!pokemonConEvolucion) {
-            return of(null);
-        }
-
-        const nombreOrigen = pokemonConEvolucion.species.name;
-        const nombreEvolucion = pokemonConEvolucion.evolves_to[0].species.name;
-
-        const opcionesIncorrectas = this.obtenerOpcionesIncorrectasEvolucion(
-            nombreOrigen, nombreEvolucion, listaPokemones
+    const validChains = evolutionChains
+        .filter((chain: any) =>
+            chain && typeof chain === 'object' &&
+            chain.chain && Array.isArray(chain.chain.evolves_to) &&
+            chain.chain.evolves_to.length > 0
         );
 
-        const opciones = this.mezclarOpciones([nombreOrigen, ...opcionesIncorrectas]);
-
-        const pregunta: Pregunta = {
-            id: `evolucion-desde-${nombreEvolucion}`,
-            pregunta: `¿Desde qué Pokémon evoluciona ${nombreEvolucion}?`,
-            imagenUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nombreEvolucion}.png`,
-            opciones: opciones.map((texto) => ({
-                texto,
-                valor: texto === nombreOrigen ? 'correcto' : 'incorrecto'
-            })),
-            respuestaCorrecta: nombreOrigen
-        };
-
-        return of(pregunta);
+    if (validChains.length === 0) {
+        return of(null); 
     }
+
+    const randomChain = this.mezclarOpciones(validChains)[0];
+            const pokemonConEvolucion = this.obtenerPokemonConEvolucion((randomChain as any).chain);
+
+    if (!pokemonConEvolucion || !pokemonConEvolucion.evolves_to?.[0]) {
+        console.warn('[Debug] No se encontró un Pokémon con evolución en la cadena seleccionada');
+        return of(null);
+    }
+
+    const nombreOrigen = pokemonConEvolucion.species.name;
+    const nombreEvolucion = pokemonConEvolucion.evolves_to[0].species.name;
+
+    const opcionesIncorrectas = this.obtenerOpcionesIncorrectasEvolucion(
+        nombreOrigen, nombreEvolucion, listaPokemones
+    );
+
+    const opciones = this.mezclarOpciones([nombreOrigen, ...opcionesIncorrectas]);
+
+
+    const especieUrl = pokemonConEvolucion.evolves_to[0].species.url;
+    const id = especieUrl.split('/').filter(Boolean).pop(); 
+
+    const pregunta: Pregunta = {
+        id: `evolucion-desde-${nombreEvolucion}`,
+        pregunta: `¿Desde qué Pokémon evoluciona ${nombreEvolucion}?`,
+        imagenUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+        opciones: opciones.map((texto) => ({
+            texto,
+            valor: texto === nombreOrigen ? 'correcto' : 'incorrecto'
+        })),
+        respuestaCorrecta: nombreOrigen
+    };
+
+    return of(pregunta);
+}
+
 
     generarPreguntaPokedex(listaPokemones: any[]): Observable<Pregunta> {
         const pokemonAleatorio = listaPokemones[Math.floor(Math.random() * listaPokemones.length)];
@@ -410,8 +429,8 @@ export class GeneradorPreguntasService {
                     switchMap((pokemonDetalles) => {
                         return this.pokeApiService.getPokemonSpecies(pokemonDetalles.species.url).pipe(
                             switchMap((especieDetalles) => {
-                                const generacionCorrecta = especieDetalles.generation.name; 
-
+                                var generacionCorrecta = especieDetalles.generation.name; 
+                                generacionCorrecta = this.formatearNombreGeneracion(generacionCorrecta);
                                 const opcionesIncorrectas = this.obtenerOpcionesIncorrectasGeneracion(generacionCorrecta);
 
                                 const opciones = this.mezclarOpciones([generacionCorrecta, ...opcionesIncorrectas]);
@@ -424,7 +443,7 @@ export class GeneradorPreguntasService {
                                         texto: `Generación ${this.formatearNombreGeneracion(opcion)}`,
                                         valor: opcion
                                     })),
-                                    respuestaCorrecta: generacionCorrecta
+                                    respuestaCorrecta: `Generación ${this.formatearNombreGeneracion(generacionCorrecta)}`
                                 };
 
                                 return of(pregunta);
@@ -469,10 +488,12 @@ export class GeneradorPreguntasService {
             'generation-vi',
             'generation-vii',
             'generation-viii',
-            'generation-ix'
+            'generation-ix',
         ];
+        const generacionesFormateadas = todasLasGeneraciones.map(gen => this.formatearNombreGeneracion(gen));
 
-        const generacionesDisponibles = todasLasGeneraciones.filter(gen => gen !== generacionCorrecta);
+        const generacionesDisponibles = generacionesFormateadas.filter(gen => gen !== generacionCorrecta);
+
         return this.mezclarOpciones(generacionesDisponibles).slice(0, 3);
     }
 

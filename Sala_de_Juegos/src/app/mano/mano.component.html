@@ -1,0 +1,8 @@
+<div class="mano-container">
+  <div class="cartas">
+    <div *ngFor="let carta of cartas; let i = index" class="carta" (click)="seleccionarCarta(i)">
+      <img [src]="carta.imagen" alt="carta" [class.seleccionada]="cartasSeleccionadas[i]" />
+    </div>
+  </div>
+  <button (click)="cambiarCartas()">Cambiar cartas seleccionadas</button>
+</div>
