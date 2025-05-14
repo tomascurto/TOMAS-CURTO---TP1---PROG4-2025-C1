@@ -1,16 +1,13 @@
 <div class="container juego-pokerala">
 
-  <!-- Botón Comenzar -->
     <div *ngIf="!juegoIniciado" class="comenzar-container">
         <button (click)="iniciarJuego()" class="btn btn-primary">Comenzar</button>
     </div>
 
-  <!-- Vista principal del juego -->
     <div *ngIf="juegoIniciado" class="zona-juego">
         <div class="mano-container" *ngFor="let mano of manos; let i = index">
             <ng-container *ngIf="i <= manoActual">
                 <div class="horizonte">
-                <!-- Carta descartada -->
                 <div class="carta">
                     <img
                     *ngIf="mano.cartasDescartadas.length > 0"
@@ -18,12 +15,10 @@
                     alt="Descartada" />
                 </div>
 
-                <!-- Carta del mazo (Back) -->
                 <div class="carta">
                     <img src="assets/cartas/Back.png" alt="Mazo" />
                 </div>
 
-                <!-- Cartas en mano -->
                     <div *ngFor="let carta of mano.manoJugador" class="carta">
                         <img
                         [src]="carta.imagen"
@@ -34,16 +29,13 @@
                     </div>
                 </div>
 
-                <!-- Cronómetro solo para la mano actual -->
                 <app-cronometro *ngIf="i === manoActual && !juegoFinalizado && !mano.juegoTerminado" #cronometro></app-cronometro>
 
-                <!-- Resultado -->
                 <div *ngIf="mano.juegoTerminado" class="resultado">
                     <p><strong>{{ mano.juego }}</strong></p>
                     <p>Puntaje: {{ mano.puntaje }}</p>
                 </div>
 
-                <!-- Botón para cambiar cartas solo si es la mano actual -->
                 <div
                     *ngIf="i === manoActual && !mano.juegoTerminado && mano.cambiosDisponibles > 0"
                     class="cambiar-cartas-container">

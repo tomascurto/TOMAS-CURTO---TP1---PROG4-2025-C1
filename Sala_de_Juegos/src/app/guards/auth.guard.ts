@@ -7,29 +7,24 @@ import { AuthService } from '../auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+    constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return new Observable<boolean>((observer) => {
-      this.authService.currentUser$.subscribe((user) => {
-        const ruta = state.url;
+    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const user = await this.authService.getCurrentUser();
+    const ruta = state.url;
 
-        if (user) {
-          if (ruta === '/login' || ruta === '/registro') {
-            this.router.navigate(['/']);
-            observer.next(false);
-          } else {
-            observer.next(true);
-          }
-        } else {
-          if (ruta.startsWith('/juegos')) {
-            this.router.navigate(['/']);
-            observer.next(false);
-          } else {
-            observer.next(true);
-          }
-        }
-      });
-    });
+    if (user) {
+      if (ruta === '/login' || ruta === '/registro') {
+        this.router.navigate(['/']);
+        return false;
+      }
+      return true;
+    } else {
+      if (ruta.startsWith('/juegos')) {
+        this.router.navigate(['/']);
+        return false;
+      }
+      return true;
+    }
   }
 }

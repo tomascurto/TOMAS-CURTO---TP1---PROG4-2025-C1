@@ -49,7 +49,7 @@ export class PokeralaComponent implements OnInit {
     this.tiempoTotal = 0;
     this.manos.forEach(mano => {
       mano.baraja = this.barajaService.generarMazo();
-      mano.manoJugador = mano.baraja.splice(0, 5); // Inicializamos la mano
+      mano.manoJugador = mano.baraja.splice(0, 5); 
       mano.cartasDescartadas = [];
       mano.cartasSeleccionadas = [];
       mano.juegoTerminado = false;
@@ -112,9 +112,8 @@ export class PokeralaComponent implements OnInit {
   finalizarMano(manoIndex: number): void {
   const mano = this.manos[manoIndex];
 
-  if (mano.juegoTerminado) return; // Evita duplicación
+  if (mano.juegoTerminado) return; 
 
-  // Asegura que el tiempo esté actualizado
   if (mano.tiempo === 0 && this.cronometroComponent) {
     mano.tiempo = this.cronometroComponent.segundos;
   }

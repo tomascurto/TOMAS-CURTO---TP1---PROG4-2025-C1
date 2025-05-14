@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { UserInterface } from './user.interface';
 import { Router } from '@angular/router';
-import { setPersistence, browserLocalPersistence } from 'firebase/auth';
+import { setPersistence, browserLocalPersistence, User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,15 @@ export class AuthService {
       .catch((error) => {
         console.error('Error al establecer persistencia:', error);
       });
+  } 
+
+  getCurrentUser(): Promise<User | null> {
+    return new Promise((resolve) => {
+      const unsubscribe = this.auth.onAuthStateChanged((user) => {
+        unsubscribe(); 
+        resolve(user);
+      });
+    });
   }
 
   private monitorAuthState(): void {
