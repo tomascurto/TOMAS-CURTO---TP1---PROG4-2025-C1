@@ -8,12 +8,14 @@ import { AuthGuard } from './guards/auth.guard';
 import { MayorMenorComponent } from './juegos/mayor-menor/mayor-menor.component';
 import { PokemonQuizComponent } from './juegos/pokemon-quiz/pokemon-quiz.component';
 import { PokeralaComponent } from './juegos/pokerala/pokerala.component';
+import { ResultadosComponent } from './pages/resultados/resultados.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
     { path: 'registro', component: RegistroComponent, canActivate: [AuthGuard] },
     { path: 'quien-soy', component: QuienSoyComponent },
+    { path: 'resultados', component: ResultadosComponent },
     { path: 'juegos/ahorcado', component: AhorcadoComponent, canActivate: [AuthGuard] },
     { path: 'juegos/mayor-menor', component: MayorMenorComponent, canActivate: [AuthGuard] },
     { path: 'juegos/pokemon-quiz', component: PokemonQuizComponent, canActivate: [AuthGuard] },

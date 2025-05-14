@@ -1,6 +1,6 @@
 <div class="home-container">
     <div class="card-grid">
-      <p-card *ngFor="let game of games" [routerLink]="game.route" class="game-card">
+      <p-card *ngFor="let game of games" [routerLink]="game.route" class="game-card game-hover">
         <div class="game-content">
           <h2>{{ game.name }}</h2>
           <img [src]="game.image" alt="{{ game.name }}" class="game-image" />
@@ -12,6 +12,9 @@
           </small>
         </ng-template>
       </p-card>
+      <div class="resultados-card game-hover" routerLink="/resultados">
+        <h2>Ver Rankings</h2>
+      </div>
     </div>
   </div>
   

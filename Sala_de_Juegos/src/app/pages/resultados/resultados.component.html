@@ -1,0 +1,100 @@
+<div class="resultados-container">
+  <div class="tab-buttons">
+    <button 
+      *ngFor="let tab of tabs; let i = index" 
+      (click)="selectedTab = i" 
+      [class.active]="selectedTab === i">
+      {{ tab }}
+    </button>
+  </div>
+
+  <div class="tab-content">
+    <ng-container [ngSwitch]="selectedTab">
+      <div *ngSwitchCase="0">
+        <h3>Ranking Ahorcado</h3>
+        <table *ngIf="rankingAhorcado.length">
+          <tr>
+            <th>Puesto</th>
+            <th>DisplayName</th>
+            <th>Tiempo</th>
+            <th>Palabra</th>
+            <th>Gano/Perdió</th>
+            <th>Vidas Restantes</th>
+            <th>Letras Seleccionadas</th>
+          </tr>
+          <tr *ngFor="let player of rankingAhorcado; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ player.displayName }}</td>
+            <td>{{ player.duracionSegundos }} s</td>
+            <td>{{ player.palabra }}</td>
+            <td>{{ player.resultado ? 'Gano' : 'Perdió' }}</td>
+            <td>{{ player.vidasRestantes }}</td>
+            <td>{{ player.letrasSeleccionadas }}</td>
+          </tr>
+        </table>
+      </div>
+      
+      <div *ngSwitchCase="1">
+        <h3>Ranking Mayor o Menor</h3>
+        <table *ngIf="rankingMoM.length">
+          <tr>
+            <th>Puesto</th>
+            <th>DisplayName</th>
+            <th>Aciertos</th>
+            <th>Tiempo</th>
+          </tr>
+          <tr *ngFor="let player of rankingMoM; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ player.displayName }}</td>
+            <td>{{ player.aciertos }}</td>
+            <td>{{ player.tiempo }} s</td>
+          </tr>
+        </table>
+      </div>
+
+      <div *ngSwitchCase="2">
+        <h3>Ranking Pokémon Quiz</h3>
+        <table *ngIf="rankingPokemon.length">
+          <tr>
+            <th>Puesto</th>
+            <th>DisplayName</th>
+            <th>Puntuación</th>
+            <th>Tiempo</th>
+          </tr>
+          <tr *ngFor="let player of rankingPokemon; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ player.displayName }}</td>
+            <td>{{ player.puntuacion }}</td>
+            <td>{{ player.tiempo }} s</td>
+          </tr>
+        </table>
+      </div>
+
+      <div *ngSwitchCase="3">
+        <h3>Ranking Pokerala</h3>
+        <table *ngIf="rankingPoker.length">
+          <tr>
+            <th>Puesto</th>
+            <th>DisplayName</th>
+            <th>Puntaje</th>
+            <th>Mejor Juego</th>
+            <th>Cartas</th>
+            <th>Tiempo</th>
+          </tr>
+          <tr *ngFor="let player of rankingPoker; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ player.displayName }}</td>
+            <td>{{ player.puntaje }}</td>
+            <td>{{ player.mejorJuego }}</td>
+            <td>
+                <div class="cards-container">
+                    <img *ngFor="let carta of player.mejorMano" [src]="carta.imagen" alt="{{ carta.nombre }}" class="card-image">
+                </div>
+            </td>
+            <td>{{ player.tiempo }} s</td>
+          </tr>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+</div>
