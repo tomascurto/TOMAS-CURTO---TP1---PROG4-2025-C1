@@ -12,10 +12,26 @@
     </ng-template>
 
     <div class="card-content">
-      <p>{{ githubUser.bio || 'Sin biografía' }}</p>
-      <p><strong>Seguidores:</strong> {{ githubUser.followers }}</p>
-      <p><strong>Siguiendo:</strong> {{ githubUser.following }}</p>
-      <p><strong>Repos públicos:</strong> {{ githubUser.public_repos }}</p>
+        <div class="juego-container">
+              <div class="descripcion">
+                <div>
+                  <p>{{ githubUser.bio || 'Sin biografía' }}</p>
+                </div>
+                <div>
+                  <p><strong>Seguidores:</strong> {{ githubUser.followers }}</p>
+                  <p><strong>Siguiendo:</strong> {{ githubUser.following }}</p>
+                  <p><strong>Repos públicos:</strong> {{ githubUser.public_repos }}</p>
+                </div>
+                <div>
+                  <p><strong>Juego propio: "Pokerala"</strong></p>
+                  <p>Juega 5 manos de Poker, cada una utilizando un mazo diferente.</p>
+                  <p>Podrás cambiar hasta dos cartas por mano para mejorar tu jugada y maximizar tus puntos.</p>
+                  <p>Cada mano te sumará puntos según la combinación de cartas que logres.</p>
+                  <p>¿Cuántos puntos podrás acumular?</p>
+                </div>
+              </div>
+              <img class="ejemplo" src="assets/pokeralaEjemplo.png" alt="ejemplo">
+        </div>
     </div>
 
     <ng-template pTemplate="footer">

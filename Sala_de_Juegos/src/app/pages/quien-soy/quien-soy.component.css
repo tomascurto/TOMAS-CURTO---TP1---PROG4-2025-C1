@@ -10,7 +10,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
   border-radius: 10px;
   padding: 1.5rem;
-  width: 320px;
+  width: 900px;
 }
 
 
@@ -42,4 +42,30 @@
 .card-footer {
   display: flex;
   justify-content: center;
+}
+
+.juego-container{
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+}
+
+.descripcion{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  font-size:medium;
+  padding: 30px;
+  background-color:#1976d2;
+  color : white;
+  
+  border-radius: 20px;
+}
+
+ .juego-container img{
+  padding:30px;
+  max-width: 400px;
+  box-shadow: #000000b7;
+  border-radius: 5px;
 }
